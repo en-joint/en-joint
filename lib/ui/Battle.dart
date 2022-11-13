@@ -63,7 +63,9 @@ class _Battle extends State<Battle> {
                     Center(
                       child: Column(
                         children: <Widget>[
-                          // Image.asset(""),
+                          Image(
+                            image: AssetImage("images/enemy1.png"),
+                          ),
                           Container(
                             width: 400,
                             child: SliderTheme(
