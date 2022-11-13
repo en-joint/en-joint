@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Battle extends StatefulWidget {
   @override
@@ -12,9 +13,7 @@ class _Battle extends State<Battle> {
       body: Center(
         child: ElevatedButton(
           child: const Text('Button'),
-          onPressed: () {
-            Navigator.pushNamed(context, "/result");
-          },
+          onPressed: () {},
         ),
       ),
     );
