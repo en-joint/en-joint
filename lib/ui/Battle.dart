@@ -7,8 +7,32 @@ class Battle extends StatefulWidget {
 }
 
 class _Battle extends State<Battle> {
+  var problems = [
+    "My plans for studying abroad depend on (     ) I can get a scholarship.",
+    "Noriko can speak Swahili and (     ) can Marco.",
+    "Due to the rain, our performance in the game was (     ) from perfect.",
+    "Emergency doors can be found at (     ) ends of this hallway.",
+    "Jewson chose Jade Homes as their main (      ) of office equipment.",
+  ];
+  var answerSelectLists = [
+    ["that", "what", "whether", "which"],
+    ["also", "as", "so", "that"],
+    ["apart", "different", "far", "free"],
+    ["supply", "supplier", "supplement", "supplication"],
+    ["both", "each", "either", "neither"],
+  ];
+  var answerLists = [
+    "whether",
+    "so",
+    "far",
+    "supplier",
+    "both",
+  ];
+  int problem_num = 0; // 現在の問題の番号
   double enemy_HP = 100; // 仮定の値
   bool isAnswered = false; // 答えたかどうかの判定
+  String button_text = "次へ";
+  String correctString = "正解";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,18 +88,24 @@ class _Battle extends State<Battle> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Container(
-                            child: Text("問題文"),
+                            child: Text(problems[problem_num]),
                           ),
                           SizedBox(
                             height: 50.0,
                           ),
                           ElevatedButton(
-                            child: const Text('解答1'),
+                            child: Text(answerSelectLists[problem_num][0]),
                             onPressed: () {
                               if (!isAnswered) {
                                 setState(() {
-                                  enemy_HP = 20;
                                   isAnswered = true;
+                                  if (answerLists[problem_num] ==
+                                      answerSelectLists[problem_num][0]) {
+                                    enemy_HP = enemy_HP - 20;
+                                    correctString = "正解";
+                                  } else {
+                                    correctString = "不正解";
+                                  }
                                 });
                               }
                             },
@@ -84,12 +114,18 @@ class _Battle extends State<Battle> {
                             height: 20.0,
                           ),
                           ElevatedButton(
-                            child: const Text('解答2'),
+                            child: Text(answerSelectLists[problem_num][1]),
                             onPressed: () {
                               if (!isAnswered) {
                                 setState(() {
-                                  enemy_HP = 40;
                                   isAnswered = true;
+                                  if (answerLists[problem_num] ==
+                                      answerSelectLists[problem_num][1]) {
+                                    enemy_HP = enemy_HP - 20;
+                                    correctString = "正解";
+                                  } else {
+                                    correctString = "不正解";
+                                  }
                                 });
                               }
                             },
@@ -98,12 +134,18 @@ class _Battle extends State<Battle> {
                             height: 20.0,
                           ),
                           ElevatedButton(
-                            child: const Text('解答3'),
+                            child: Text(answerSelectLists[problem_num][2]),
                             onPressed: () {
                               if (!isAnswered) {
                                 setState(() {
-                                  enemy_HP = 40;
                                   isAnswered = true;
+                                  if (answerLists[problem_num] ==
+                                      answerSelectLists[problem_num][2]) {
+                                    enemy_HP = enemy_HP - 20;
+                                    correctString = "正解";
+                                  } else {
+                                    correctString = "不正解";
+                                  }
                                 });
                               }
                             },
@@ -112,12 +154,18 @@ class _Battle extends State<Battle> {
                             height: 20.0,
                           ),
                           ElevatedButton(
-                            child: const Text('解答4'),
+                            child: Text(answerSelectLists[problem_num][3]),
                             onPressed: () {
                               if (!isAnswered) {
                                 setState(() {
-                                  enemy_HP = 10;
                                   isAnswered = true;
+                                  if (answerLists[problem_num] ==
+                                      answerSelectLists[problem_num][3]) {
+                                    enemy_HP = enemy_HP - 20;
+                                    correctString = "正解";
+                                  } else {
+                                    correctString = "不正解";
+                                  }
                                 });
                               }
                             },
@@ -142,16 +190,29 @@ class _Battle extends State<Battle> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("正解"),
+                    Text(correctString),
                     SizedBox(
                       height: 20.0,
                     ),
                     ElevatedButton(
-                      child: const Text('次へ'),
+                      child: Text(button_text),
                       onPressed: () {
-                        setState(() {
-                          isAnswered = false;
-                        });
+                        setState(
+                          () {
+                            isAnswered = false;
+                            if (enemy_HP <= 0) {
+                              enemy_HP = 100;
+                            }
+                            if (problem_num == 4) {
+                              Navigator.pushNamed(context, "/result");
+                            } else {
+                              problem_num++;
+                              if (problem_num == 4) {
+                                button_text = "終了";
+                              }
+                            }
+                          },
+                        );
                       },
                     ),
                   ],
